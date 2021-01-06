@@ -1,17 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-const useInitialState= (API) => {
-  const [video, setVideos] = useState({
-  'mylist': [],
-  'trends': [],
-  'originals': [], });
+const useInitiaState = (API) => {
 
-  useEffect(() => {
-    fetch(API)
-    .then(response => response.json())
-    .then(data => setVideos(data));
-  }, []);
-  return video;
-}
+    const [videos, setVideos] = useState({ "mylist": [], "trends": [], "original": [] });
+    const [categories, setCategories] = useState([]);
 
-export default useInitialState;
+    useEffect(() => {
+        fetch(API)
+            .then((response) => response.json())
+            .then((data) => {
+                setVideos(data);
+                setCategories(Object.keys(data));
+            });
+    }, []);
+
+    return [videos, categories];
+};
+
+export default useInitiaState;
